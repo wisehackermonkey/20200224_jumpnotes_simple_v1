@@ -11,8 +11,18 @@ save to json function
 dockerize
 host
 */
+//3d party libraries
 import express from "express"
+//https://expressjs.com/en/starter/hello-world.html
 
+import low from "lowdb"
+//https://github.com/typicode/lowdb
+
+import FileSync from "lowdb/adapters/FileSync"
+
+
+//custom scripts
+import {initalizeDatabase} from "./helpers"
 
 //express.js setup (web server)
 // https://expressjs.com/en/starter/hello-world.html
@@ -21,11 +31,23 @@ const PORT = 3000
 
 
 
+//lowdb simple json database setup
+const adapter = new FileSync('db.json')
+const db = low(adapter)
 
 
 
-app.get("/v1/note/:data",(req,res)=>{
-    res.send("Works");
+
+initalizeDatabase(db)
+
+app.get("/v1/note/save/:data",(req,res)=>{
+    let note_data = req.params.data
+    //save note to json database
+    db.get("notes")
+      .push({text: note_data,time:Date.now()})
+      .write()
+
+    res.send("Note has been saved to database");
 })
 
 
