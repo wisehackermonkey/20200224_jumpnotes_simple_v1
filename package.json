@@ -21,6 +21,7 @@
   "homepage": "https://github.com/wisehackermonkey/20200224_jumpnotes_simple_v1#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-validator": "^6.4.0",
     "lowdb": "^1.0.0"
   },
   "devDependencies": {
