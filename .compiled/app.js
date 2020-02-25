@@ -8,9 +8,7 @@ var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
 
-var _check = require("express-validator/check");
-
-var _filter = require("express-validator/filter");
+var _expressValidator = require("express-validator");
 
 var _lowdb = require("lowdb");
 
@@ -29,11 +27,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //https://github.com/typicode/lowdb
 
-//3d party libraries
-var app = (0, _express2.default)();
-
-//custom scripts
-
 //https://expressjs.com/en/starter/hello-world.html
 //jump notes main server 
 //manages saving notes
@@ -50,6 +43,11 @@ x finish form setup [https://developer.mozilla.org/en-US/docs/Learn/Server-side/
 - button save
 
 */
+var app = (0, _express2.default)();
+
+//custom scripts
+
+//3d party libraries
 
 var PORT = 3000;
 var INDEX_PATH = "/../web/index.html";
@@ -65,10 +63,10 @@ app.use(_express2.default.urlencoded());
 app.use(_express2.default.static('web'));
 
 app.post("/v1/note/save/", [
-// username must be an email
-(0, _check.check)('data').isString().isLength({ min: 1 }).trim().escape()], function (req, res) {
+// username must be an  email
+(0, _expressValidator.check)('data').isString().isLength({ min: 1 }).trim().escape()], function (req, res) {
 
-    var errors = (0, _check.validationResult)(req);
+    var errors = (0, _expressValidator.validationResult)(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }

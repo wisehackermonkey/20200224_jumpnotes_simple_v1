@@ -17,8 +17,7 @@ import path from "path"
 //3d party libraries
 import express from "express"
 //https://expressjs.com/en/starter/hello-world.html
-import { check, validationResult } from "express-validator/check"
-import { sanitizeBody } from "express-validator/filter"
+import { check, validationResult } from "express-validator"
 
 import low from "lowdb"
 //https://github.com/typicode/lowdb
@@ -52,7 +51,7 @@ app.use(express.static('web'))
 
 
 app.post("/v1/note/save/", [
-    // username must be an email
+    // username must be an  email
     check('data').isString().isLength({ min: 1 }).trim().escape()
   ],
   (req,res)=>{
