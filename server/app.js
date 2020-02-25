@@ -9,7 +9,7 @@ x api endpoint
 x save to json function
 -dockerize
 - host
-- finish form setup [https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/forms]
+x finish form setup [https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/forms]
 - button save
 
 */
@@ -17,7 +17,7 @@ import path from "path"
 //3d party libraries
 import express from "express"
 //https://expressjs.com/en/starter/hello-world.html
-import { body, validationResult } from "express-validator/check"
+import { check, validationResult } from "express-validator/check"
 import { sanitizeBody } from "express-validator/filter"
 
 import low from "lowdb"
@@ -51,42 +51,28 @@ app.use(express.static('web'))
 
 
 
-// app.post("/v1/note/save/:data",(req,res)=>{
-//     let note_data = req.params.data
-//     DabaseSaveNote(db,note_data)
-//     res.send("Note has been saved to database");
-// })
+app.post("/v1/note/save/", [
+    // username must be an email
+    check('data').isString().isLength({ min: 1 }).trim().escape()
+  ],
+  (req,res)=>{
 
-app.post("/v1/note/save/",(req,res)=>{
+    const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
     let note_data = req.body.data
+
     DabaseSaveNote(db,note_data)
-    console.log(req.body)
-    res.send("Note has been saved to database");
+
+    let result_message = "Note has been saved to database:" +JSON.stringify(req.body)
+    console.log(result_message)
+    res.send(result_message);
 })
 
-app.post("/team_name_url",(req,res)=>{
-    console.log(req)
-    res.end()
-})
-
-app.post('/submit-form', (req, res) => {
-    const username = req.body.username
-    console.log(username)
-
-    //...
-    res.send('POST successful')
-    res.end()
-  })
 
 
-// //display the main page
-// app.get("/",(req,res)=>{
-//     let index_path = "C:/Users/oranm/github/20200224_jumpnotes_simple_v1/web/index.html"
-//     res.sendFile(express.static('web')) //("Please use post version of the endpoint instead of get, thanks.");
-// })
-// app.get("/v1/note/save/:data",(req,res)=>{
-//     res.send("Please use post version of the endpoint instead of get, thanks.");
-// })
 app.listen(PORT,()=>{
     console.log("Jump Notes Server has started")
     console.log(`Url: http://localhost:${PORT}`)

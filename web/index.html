@@ -3,32 +3,19 @@
     <head>
         <title>JumpNotes v1</title>
     </head>
-<body>
+    <body>
 
-<h1>Jump Notes</h1>
-<p>a note taking app</p>
+        <h1>Jump Notes</h1>
+        <h2>v1.0/h2>
+        <p>a note taking app</p>
 
-<form action="/v1/note/save/" method="post">
-    <label for="team_name">Enter your note! </label>
-    <input id="team_name" type="textarea" name="data" value="Default name for team.">
-    <input type="submit" value="OK">
-    <!-- <textarea name="note" id="" cols="30" rows="10">
-        <label>Note:
-            <input name="data" >
-        </label>
-        
-    </textarea> -->
-</form>
+        <form action="/v1/note/save/" method="post" id="usrform">
+            
+            <textarea name="data" form="usrform" cols="30" rows="10" >Enter text here...</textarea>
 
-<form action="/team_name_url" method="post">
-    <label for="team_name">Enter name: </label>
-    <input id="team_name" type="text" name="name_field" value="Default name for team.">
-    <input type="submit" value="OK">
-</form>
+            <input type="submit" value="OK">
 
-<form method="POST" action="/submit-form">
-    <input type="text" name="username" />
-    <input type="submit" />
-  </form>
-</body>
+        </form>
+
+    </body>
 </html>
