@@ -27,7 +27,7 @@ import FileSync from "lowdb/adapters/FileSync"
 
 
 //custom scripts
-import {initalizeDatabase} from "./helpers"
+import {initalizeDatabase, DabaseSaveNote} from "./helpers"
 
 //express.js setup (web server)
 // https://expressjs.com/en/starter/hello-world.html
@@ -45,14 +45,38 @@ const db = low(adapter)
 initalizeDatabase(db)
 
 
+app.use(express.urlencoded())
 
-app.post("/v1/note/save/:data",(req,res)=>{
-    let note_data = req.params.data
+app.use(express.static('web'))
+
+
+
+// app.post("/v1/note/save/:data",(req,res)=>{
+//     let note_data = req.params.data
+//     DabaseSaveNote(db,note_data)
+//     res.send("Note has been saved to database");
+// })
+
+app.post("/v1/note/save/",(req,res)=>{
+    let note_data = req.body.data
     DabaseSaveNote(db,note_data)
+    console.log(req.body)
     res.send("Note has been saved to database");
 })
 
-app.use(express.static('web'))
+app.post("/team_name_url",(req,res)=>{
+    console.log(req)
+    res.end()
+})
+
+app.post('/submit-form', (req, res) => {
+    const username = req.body.username
+    console.log(username)
+
+    //...
+    res.send('POST successful')
+    res.end()
+  })
 
 
 // //display the main page
@@ -60,9 +84,9 @@ app.use(express.static('web'))
 //     let index_path = "C:/Users/oranm/github/20200224_jumpnotes_simple_v1/web/index.html"
 //     res.sendFile(express.static('web')) //("Please use post version of the endpoint instead of get, thanks.");
 // })
-app.get("/v1/note/save/:data",(req,res)=>{
-    res.send("Please use post version of the endpoint instead of get, thanks.");
-})
+// app.get("/v1/note/save/:data",(req,res)=>{
+//     res.send("Please use post version of the endpoint instead of get, thanks.");
+// })
 app.listen(PORT,()=>{
     console.log("Jump Notes Server has started")
     console.log(`Url: http://localhost:${PORT}`)
