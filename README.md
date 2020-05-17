@@ -1,6 +1,6 @@
 # 20200224_jumpnotes_simple_v1
 jump notes is a simple note keeping app :my second attempt at jumpnotes
-
+[Live demo! (as of 20200516)](http://orancollins.com:4000/)
 ![](https://i.imgur.com/vbH8SfW.png)
 ### Run oneliner 
 ```
